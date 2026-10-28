@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "vvenc: build debug",
+            "type": "process",
+            "command": "bash",
+            "args": ["${workspaceFolder}/build_dev.sh"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "vvenc: prepare 1-frame debug input",
+            "type": "process",
+            "command": "ffmpeg",
+            "args": [
+                "-hide_banner",
+                "-loglevel", "warning",
+                "-y",
+                "-threads", "1",
+                "-i", "${workspaceFolder}/../testdata/big-buck-bunny-480p-30sec.mp4",
+                "-map", "0:v:0",
+                "-an",
+                "-frames:v", "1",
+                "-pix_fmt", "yuv420p",
+                "-threads", "1",
+                "-f", "yuv4mpegpipe",
+                "${workspaceFolder}/build/debug/big-buck-bunny-first-frame.y4m"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "vvenc: build debug",
+            "problemMatcher": []
+        }
+    ]
+}

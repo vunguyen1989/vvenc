@@ -10,7 +10,7 @@ deploy
 *.sdf
 *.suo
 .vs/
-.vscode/
+# .vscode/
 /CMakeSettings.json
 /out/
 .project
